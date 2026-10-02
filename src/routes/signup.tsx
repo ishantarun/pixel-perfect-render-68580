@@ -29,12 +29,12 @@ const schema = z
 function SignUp() {
   const nav = useNavigate();
   const [f, setF] = useState({ name: "", email: "", password: "", confirm: "" });
-  const [err, setErr] = useState<Record<string, string>>({});
+  const [err, setErr] = useState<Partial<Record<"name" | "email" | "password" | "confirm", string>>>({});
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const r = schema.safeParse(f);
-    if (!r.success) return setErr(Object.fromEntries(r.error.issues.map((i) => [i.path[0], i.message])));
+    if (!r.success) return setErr(Object.fromEntries(r.error.issues.map((i) => [String(i.path[0]), i.message])));
     setErr({});
     actions.setPrefs({ name: r.data.name.split(" ")[0] });
     toast.success(`Welcome, ${r.data.name}!`, { description: "Demo account created." });

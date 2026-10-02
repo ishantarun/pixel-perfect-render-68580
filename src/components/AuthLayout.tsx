@@ -21,7 +21,7 @@ export function AuthLayout({ title, subtitle, children }: { title: string; subti
   );
 }
 
-export function AuthField({ label, error, ...props }: { label: string; error?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
+export function AuthField({ label, error, ...props }: { label: string; error?: string | undefined } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className="block">
       <span className="mb-1.5 block text-sm font-medium">{label}</span>

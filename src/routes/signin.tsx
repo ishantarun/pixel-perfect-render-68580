@@ -24,12 +24,12 @@ const schema = z.object({
 function SignIn() {
   const nav = useNavigate();
   const [f, setF] = useState({ email: "", password: "", remember: true });
-  const [err, setErr] = useState<Record<string, string>>({});
+  const [err, setErr] = useState<Partial<Record<"name" | "email" | "password" | "confirm", string>>>({});
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const r = schema.safeParse(f);
-    if (!r.success) return setErr(Object.fromEntries(r.error.issues.map((i) => [i.path[0], i.message])));
+    if (!r.success) return setErr(Object.fromEntries(r.error.issues.map((i) => [String(i.path[0]), i.message])));
     setErr({});
     toast.success("Welcome back!", { description: "Demo sign-in — taking you to your dashboard." });
     nav({ to: "/" });
