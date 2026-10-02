@@ -36,7 +36,7 @@ function SignUp() {
     const r = schema.safeParse(f);
     if (!r.success) return setErr(Object.fromEntries(r.error.issues.map((i) => [String(i.path[0]), i.message])));
     setErr({});
-    actions.setPrefs({ name: r.data.name.split(" ")[0] });
+    actions.setPrefs({ name: r.data.name.split(" ")[0] ?? r.data.name });
     toast.success(`Welcome, ${r.data.name}!`, { description: "Demo account created." });
     nav({ to: "/" });
   };
